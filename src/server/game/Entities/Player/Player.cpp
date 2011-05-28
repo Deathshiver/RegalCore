@@ -7074,24 +7074,37 @@ bool Player::RewardHonor(Unit *uVictim, uint32 groupsize, int32 honor, bool pvpt
     if (HasAura(SPELL_AURA_PLAYER_INACTIVE))
         return false;
 
+    // check the legitimacy of the kill before proceeding with reward
+    // invalid kill -- do not proc on death, do not reward
+    if (!uVictim || uVictim == this)
+        return false;
+
+    // same ip kill -- proc on death, do not reward
+    if (uVictim->GetTypeId() == TYPEID_PLAYER && GetSession()->GetRemoteAddress() == uVictim->ToPlayer()->GetSession()->GetRemoteAddress())
+    {
+        sLog->outDetail("Player %s obtained an invalid kill (Same IP)", GetSession()->GetPlayerName());
+        return true;
+    }
+
+    // unrewarded kill -- proc on death, do not reward
+    if (uVictim->HasAuraType(SPELL_AURA_NO_PVP_CREDIT))
+        return true;
+
+    // arena kill -- proc on death, do not reward
+    if (InBattleground() && GetBattleground() && GetBattleground()->isArena())
+        return true;
+
     uint64 victim_guid = 0;
     uint32 victim_rank = 0;
 
     // need call before fields update to have chance move yesterday data to appropriate fields before today data change.
     UpdateHonorFields();
 
-    // do not reward honor in arenas, but return true to enable onkill spellproc
-    if (InBattleground() && GetBattleground() && GetBattleground()->isArena())
-        return true;
-
     // Promote to float for calculations
     float honor_f = (float)honor;
 
     if (honor_f <= 0)
     {
-        if (!uVictim || uVictim == this || uVictim->HasAuraType(SPELL_AURA_NO_PVP_CREDIT))
-            return false;
-
         victim_guid = uVictim->GetGUID();
 
         if (uVictim->GetTypeId() == TYPEID_PLAYER)
@@ -7190,9 +7203,6 @@ bool Player::RewardHonor(Unit *uVictim, uint32 groupsize, int32 honor, bool pvpt
 
     if (sWorld->getBoolConfig(CONFIG_PVP_TOKEN_ENABLE) && pvptoken)
     {
-        if (!uVictim || uVictim == this || uVictim->HasAuraType(SPELL_AURA_NO_PVP_CREDIT))
-            return true;
-
         if (uVictim->GetTypeId() == TYPEID_PLAYER)
         {
             // Check if allowed to receive it in current map
