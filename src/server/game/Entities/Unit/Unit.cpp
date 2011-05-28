@@ -6479,6 +6479,16 @@ bool Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, AuraEffect* trigger
         {
             switch(dummySpell->Id)
             {
+                // Tricks of the Trade
+                case 57934:
+                {
+                    if (Unit* rtTarget = GetMisdirectionTarget())
+                        CastSpell(rtTarget, 57933, true);  // Damage Buff
+
+                    CastSpell(this, 59628, true);
+                    RemoveAura(dummySpell->Id);
+                    return true;
+                }
                 // Glyph of Backstab
                 case 56800:
                 {
