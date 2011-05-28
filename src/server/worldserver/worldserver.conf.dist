@@ -2661,7 +2661,7 @@ AlwaysMaxWeaponSkill = 0
 #
 #    PvPToken.Enable
 #        Description: Character will receive a token after defeating another character that yields
-#                     honor.
+#                     honor and does not have the same IP.
 #        Default:     0 - (Disabled)
 #                     1 - (Enabled)
 
@@ -2768,6 +2768,38 @@ LevelReq.Auction = 1
 #        Default:     1
 
 LevelReq.Mail = 1
+
+#
+###################################################################################################
+
+###################################################################################################
+# PvP Drop Addon -- By Deathshiver
+#
+#    PvPDrop.Enable
+#        Description: Character will have a chance to receive specified item after defeating
+#                     another character that yields honor and does not have the same IP. Note that
+#                     if PvPToken is enabled, this will be restricted to zones specified in
+#                     PvPToken.MapAllowType.
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
+
+PvPDrop.Enable = 0
+
+#
+#    PvPDrop.ItemID
+#        Description: Item characters have a chance to receive after defeating another character if
+#                     PvP Drop system is enabled.
+#        Default:     29434 - (Badge of justice)
+
+PvPDrop.ItemID = 29434
+
+#
+#    PvPDrop.Chance
+#        Description: Chance (in percent) a character will have to receive specified item if that
+#                     character meets the requirements.
+#        Default:     50
+
+PvPDrop.Chance = 50
 
 #
 ###################################################################################################
