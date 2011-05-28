@@ -2332,7 +2332,7 @@ void ObjectMgr::LoadItemTemplates()
 
         }
         else
-			sLog->outDetail("Item (Entry: %u) does not exist in item.dbc, assumed custom.", entry);
+            sLog->outDetail("Item (Entry: %u) does not exist in item.dbc, assumed custom.", entry);
 
         if (itemTemplate.Class >= MAX_ITEM_CLASS)
         {
