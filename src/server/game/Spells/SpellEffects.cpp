@@ -1355,6 +1355,9 @@ void Spell::EffectDummy(SpellEffIndex effIndex)
                 if (m_caster->HasUnitState(UNIT_STAT_CONTROLLED))
                     return;
 
+                if ((unitTarget->HasAuraType(SPELL_AURA_MOD_STEALTH) || unitTarget->HasAuraType(SPELL_AURA_MOD_INVISIBILITY)) && !m_caster->canSeeOrDetect(unitTarget, true))
+                    return;
+
                 m_caster->CastSpell(unitTarget, damage, true);
                 return;
             }
