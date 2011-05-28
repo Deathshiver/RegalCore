@@ -2472,7 +2472,7 @@ SpellMissInfo Unit::MeleeSpellHitResult(Unit *pVictim, SpellEntry const *spell)
 SpellMissInfo Unit::MagicSpellHitResult(Unit *pVictim, SpellEntry const *spell)
 {
     // Can`t miss on dead target (on skinning for example)
-    if (!pVictim->isAlive() && pVictim->GetTypeId() != TYPEID_PLAYER)
+    if ((!pVictim->isAlive() && pVictim->GetTypeId() != TYPEID_PLAYER) || spell->SpellIconID == 3178)
         return SPELL_MISS_NONE;
 
     SpellSchoolMask schoolMask = GetSpellSchoolMask(spell);
