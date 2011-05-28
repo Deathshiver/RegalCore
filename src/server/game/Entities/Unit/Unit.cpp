@@ -10350,6 +10350,18 @@ uint32 Unit::SpellDamageBonus(Unit *pVictim, SpellEntry const *spellProto, uint3
                     AddPctN(DoneTotalMod, (*i)->GetAmount());
                 break;
             }
+            case 6427: // Dirty Deeds (Rank 1)
+            case 6580:
+            case 6428: // Dirty Deeds (Rank 2)
+            case 6579:
+            {
+                if (pVictim->HasAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, spellProto, this))
+                {
+                    AuraEffect * eff0 = (*i)->GetBase()->GetEffect(0);
+                    DoneTotalMod *= (-eff0->GetAmount() + 100.0f) / 100.0f;
+                }
+                break;
+            }
             // Soul Siphon
             case 4992:
             case 4993:
