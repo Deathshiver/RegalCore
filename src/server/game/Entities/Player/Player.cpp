@@ -7075,9 +7075,9 @@ bool Player::RewardHonor(Unit *uVictim, uint32 groupsize, int32 honor, bool pvpt
         return false;
 
     // check the legitimacy of the kill before proceeding with reward
-    // invalid kill -- do not proc on death, do not reward
+    // invalid kill -- proc on death, do not reward -- TC seems to think killing yourself should proc...
     if (!uVictim || uVictim == this)
-        return false;
+        return true;
 
     // same ip kill -- proc on death, do not reward
     if (uVictim->GetTypeId() == TYPEID_PLAYER && GetSession()->GetRemoteAddress() == uVictim->ToPlayer()->GetSession()->GetRemoteAddress())
