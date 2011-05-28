@@ -13079,9 +13079,14 @@ void Unit::ModSpellCastTime(SpellEntry const* spellProto, int32 & castTime, Spel
 {
     if (!spellProto || castTime < 0)
         return;
+
+    SpellModOp mod = SPELLMOD_CASTING_TIME;
+    if (spell && spell->getState() == SPELL_STATE_CASTING)
+        mod = SPELLMOD_DURATION;
+
     //called from caster
     if (Player* modOwner = GetSpellModOwner())
-        modOwner->ApplySpellMod(spellProto->Id, SPELLMOD_CASTING_TIME, castTime, spell);
+        modOwner->ApplySpellMod(spellProto->Id, mod, castTime, spell);
 
     if (!(spellProto->Attributes & (SPELL_ATTR0_UNK4|SPELL_ATTR0_TRADESPELL)) && spellProto->SpellFamilyName)
         castTime = int32(float(castTime) * GetFloatValue(UNIT_MOD_CAST_SPEED));
