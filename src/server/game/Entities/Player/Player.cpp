@@ -7220,6 +7220,18 @@ bool Player::RewardHonor(Unit *uVictim, uint32 groupsize, int32 honor, bool pvpt
         }
     }
 
+    if (sWorld->getBoolConfig(CONFIG_PVP_DROP_ENABLE) && sWorld->getIntConfig(CONFIG_PVP_DROP_ID) > 0 && sWorld->getRate(RATE_PVP_DROP_CHANCE) > 0.0f)
+    {
+        if ((rand() % 100) < sWorld->getRate(RATE_PVP_DROP_CHANCE))
+        {
+            if (AddItem(sWorld->getIntConfig(CONFIG_PVP_DROP_ID), 1))
+            {
+                ChatHandler(this).PSendSysMessage("|cffcc9999Congratulations! You have been awarded a legendary token for your kill that can be spent to obtain an ultra rare legendary item!");
+                sLog->outBasic("PvPDrop :: Player %s obtained a legendary token!", GetSession()->GetPlayerName());
+            }
+        }
+    }
+
     return true;
 }
 

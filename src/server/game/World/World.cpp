@@ -1148,6 +1148,18 @@ void World::LoadConfigSettings(bool reload)
     m_int_configs[CONFIG_PVP_TOKEN_COUNT] = sConfig->GetIntDefault("PvPToken.ItemCount", 1);
     if (m_int_configs[CONFIG_PVP_TOKEN_COUNT] < 1)
         m_int_configs[CONFIG_PVP_TOKEN_COUNT] = 1;
+    
+    m_bool_configs[CONFIG_PVP_DROP_ENABLE] = sConfig->GetBoolDefault("PvPDrop.Enable", false);
+ 	m_int_configs[CONFIG_PVP_DROP_ID] = sConfig->GetIntDefault("PvPDrop.ItemID", 0);
+    rate_values[RATE_PVP_DROP_CHANCE] = sConfig->GetFloatDefault("PvPDrop.Chance", 0.0f);
+
+    if (m_bool_configs[CONFIG_PVP_DROP_ENABLE])
+        sLog->outBasic("[PvP Drop] by Deathshiver initialized with item %d and %f chance of dropping.", m_int_configs[CONFIG_PVP_DROP_ID], rate_values[RATE_PVP_DROP_CHANCE]);
+    if (rate_values[RATE_PVP_DROP_CHANCE] < 0.0f)
+    {
+        sLog->outError("PvPDrop.Chance (%f) must be >=0. Using 0.0 instead.", rate_values[RATE_PVP_DROP_CHANCE]);
+        rate_values[RATE_PVP_DROP_CHANCE] = 0.0f;
+    }
 
     m_bool_configs[CONFIG_NO_RESET_TALENT_COST] = sConfig->GetBoolDefault("NoResetTalentsCost", false);
     m_bool_configs[CONFIG_SHOW_KICK_IN_WORLD] = sConfig->GetBoolDefault("ShowKickInWorld", false);
