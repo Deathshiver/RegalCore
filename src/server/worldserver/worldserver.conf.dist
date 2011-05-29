@@ -1276,6 +1276,13 @@ MaxPrimaryTradeSkill = 2
 MinPetitionSigns = 9
 
 #
+#    Guild.CharterCost
+#        Description: Cost (in copper) to purchase a guild charter.
+#        Default:     1000
+
+Guild.CharterCost = 1000
+
+#
 #    MaxGroupXPDistance
 #        Description: Max distance to creature for group member to get experience at creature
 #                     death.
@@ -2477,6 +2484,17 @@ Arena.ArenaStartPersonalRating = 0
 #        Default:     1500
 
 Arena.ArenaStartMatchmakerRating = 1500
+
+#
+#    Arena.CharterXvXCost
+#        Description: Cost (in copper) to purchase an arena team charter.
+#        Default 2v2: 800000
+#        Default 3v3: 1200000
+#        Default 5v5: 2000000
+
+Arena.Charter2v2Cost = 800000
+Arena.Charter3v3Cost = 1200000
+Arena.Charter5v5Cost = 2000000
 
 #
 ###################################################################################################

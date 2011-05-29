@@ -1030,6 +1030,11 @@ void World::LoadConfigSettings(bool reload)
     m_bool_configs[CONFIG_ARENA_SEASON_IN_PROGRESS]                  = sConfig->GetBoolDefault("Arena.ArenaSeason.InProgress", true);
     m_bool_configs[CONFIG_ARENA_LOG_EXTENDED_INFO]                   = sConfig->GetBoolDefault("ArenaLog.ExtendedInfo", false);
 
+    m_int_configs[CONFIG_GUILD_CHARTER_COST]                         = sConfig->GetIntDefault ("Guild.CharterCost", 1000);
+    m_int_configs[CONFIG_ARENA_TEAM_CHARTER_2V2_COST]                = sConfig->GetIntDefault ("Arena.Charter2v2Cost", 800000);
+    m_int_configs[CONFIG_ARENA_TEAM_CHARTER_3V3_COST]                = sConfig->GetIntDefault ("Arena.Charter3v3Cost", 1200000);
+    m_int_configs[CONFIG_ARENA_TEAM_CHARTER_5V5_COST]                = sConfig->GetIntDefault ("Arena.Charter5v5Cost", 2000000);
+
     m_bool_configs[CONFIG_OFFHAND_CHECK_AT_SPELL_UNLEARN]            = sConfig->GetBoolDefault("OffhandCheckAtSpellUnlearn", true);
 
     if (int32 clientCacheId = sConfig->GetIntDefault("ClientCacheVersion", 0))
