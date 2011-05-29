@@ -59,7 +59,7 @@ RealmID = 1
 #        Example:     "@prefix@/share/trinitycore"
 #        Default:     "."
 
-DataDir = "."
+DataDir = "data"
 
 #
 #    LogsDir
@@ -68,7 +68,7 @@ DataDir = "."
 #                     Logs directory must exists, or log file creation will be disabled.
 #        Default:     "" - (Log files will be stored in the current path)
 
-LogsDir = ""
+LogsDir = "logs"
 
 #
 #    LoginDatabaseInfo
@@ -85,9 +85,9 @@ LogsDir = ""
 #                     "127.0.0.1;3306;trinity;trinity;world"      - (WorldDatabaseInfo)
 #                     "127.0.0.1;3306;trinity;trinity;characters" - (CharacterDatabaseInfo)
 
-LoginDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;auth"
-WorldDatabaseInfo     = "127.0.0.1;3306;trinity;trinity;world"
-CharacterDatabaseInfo = "127.0.0.1;3306;trinity;trinity;characters"
+LoginDatabaseInfo     = "127.0.0.1;3306;root;root;auth"
+WorldDatabaseInfo     = "127.0.0.1;3306;root;root;world"
+CharacterDatabaseInfo = "127.0.0.1;3306;root;root;characters"
 
 #
 #    LoginDatabase.WorkerThreads
@@ -245,25 +245,25 @@ ChangeWeatherInterval = 600000
 #
 #    PlayerSaveInterval
 #        Description: Time (in milliseconds) for player save interval.
-#        Default:     900000 - (15 min)
+#        Default:     300000 - (5 min)
 
-PlayerSaveInterval = 900000
+PlayerSaveInterval = 300000
 
 #
 #    PlayerSave.Stats.MinLevel
 #        Description: Minimum level for saving character stats in the database for external usage.
-#        Default:     0  - (Disabled, Do not save character stats)
-#                     1+ - (Enabled, Level beyond which character stats are saved)
+#        Default:     1+ - (Enabled, Level beyond which character stats are saved)
+#                     0  - (Disabled, Do not save character stats)
 
-PlayerSave.Stats.MinLevel = 0
+PlayerSave.Stats.MinLevel = 1
 
 #
 #    PlayerSave.Stats.SaveOnlyOnLogout
 #        Description: Save player stats only on logout.
-#        Default:     1 - (Enabled, Only save on logout)
-#                     0 - (Disabled, Save on every player save)
+#        Default:     0 - (Disabled, Save on every player save)
+#                     1 - (Enabled, Only save on logout)
 
-PlayerSave.Stats.SaveOnlyOnLogout = 1
+PlayerSave.Stats.SaveOnlyOnLogout = 0
 
 #
 #    vmap.enableLOS
@@ -349,10 +349,10 @@ LogDB.Opt.ClearTime = 1209600
 #
 #    MaxCoreStuckTime
 #        Description: Time (in seconds) before the server is forced to crash if it is frozen.
-#        Default:     0   - (Disabled)
-#                     10+ - (Enabled, Recommended 10+)
+#        Default:     30 - (Enabled, Recommended 10+)
+#                     0  - (Disabled)
 
-MaxCoreStuckTime = 0
+MaxCoreStuckTime = 30
 
 #
 #    AddonChannel
@@ -397,10 +397,9 @@ PersistentCharacterCleanFlags = 0
 #
 #    PidFile
 #        Description: World daemon PID file
-#        Example:     "./worldd.pid" - (Enabled)
-#        Default:     ""             - (Disabled)
+#        Default:     "world.pid"    - (Enabled)
 
-PidFile = ""
+PidFile = "world.pid"
 
 #
 #    LogLevel
@@ -415,10 +414,10 @@ LogLevel = 1
 #
 #    LogFile
 #        Description: Log file for main server log.
-#        Default:     "Server.log" - (Enabled)
+#        Default:     "World.log" - (Enabled)
 #                     ""           - (Disabled)
 
-LogFile = "Server.log"
+LogFile = "World.log"
 
 #
 #    LogTimestamp
@@ -432,12 +431,12 @@ LogTimestamp = 0
 #
 #    LogFileLevel
 #        Description: Server file level of logging
-#        Default:     0 - (Minimum)
-#                     1 - (Basic)
+#        Default:     1 - (Basic)
+#                     0 - (Minimum)
 #                     2 - (Detail)
 #                     3 - (Full/Debug)
 
-LogFileLevel = 0
+LogFileLevel = 1
 
 #
 #    Debug Log Mask
@@ -483,7 +482,7 @@ DebugLogMask = 0
 #
 #    WorldLogFile
 #        Description: Packet logging file for the world server.
-#        Example:     "World.log" - (Enabled)
+#        Example:     "Packets.log" - (Enabled)
 #        Default:     ""          - (Disabled)
 
 WorldLogFile = ""
@@ -499,10 +498,10 @@ DBErrorLogFile = "DBErrors.log"
 #
 #    CharLogFile
 #        Description: Log file for character operations
-#        Default:     "Char.log" - (Enabled)
+#        Default:     "Characters.log" - (Enabled)
 #                     ""         - (Disabled)
 
-CharLogFile = "Char.log"
+CharLogFile = "Characters.log"
 
 #
 #    CharLogTimestamp
@@ -562,10 +561,10 @@ GmLogTimestamp = 0
 #    GmLogPerAccount
 #        Description: Create a log file per gamemaster account.
 #        Important:   Logs not created if GmLogFile is not set.
-#        Default:     0 - (Disabled)
-#                     1 - (Enabled)
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
 
-GmLogPerAccount = 0
+GmLogPerAccount = 1
 
 #
 #    RaLogFile
@@ -578,19 +577,18 @@ RaLogFile = "RA.log"
 #
 #    ArenaLogFile
 #        Description: Log file for arena fights and arena team creations.
-#        Example:     "Arena.log" - (Enabled)
-#        Default:     ""          - (Disabled)
+#        Default:     "Arena.log" - (Enabled)
 
-ArenaLogFile = ""
+ArenaLogFile = "Arena.log"
 
 #
 #    ArenaLog.ExtendedInfo
 #        Description: Include extended info to ArenaLogFile for each player after rated arena
 #                     matches (guid, name, team, IP, healing/damage done, killing blows).
-#        Default:     0 - (Disabled)
-#                     1 - (Enabled)
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
 
-ArenaLog.ExtendedInfo = 0
+ArenaLog.ExtendedInfo = 1
 
 #
 #    SQLDriverLogFile
@@ -626,10 +624,9 @@ SQLDriverQueryLogging = 0
 #                     12 - Lmagenta
 #                     13 - Lcyan
 #                     14 - White
-#        Example:     "13 11 9 5" - (Enabled)
-#        Default:     ""          - (Disabled)
+#        Default:     "14 7 11 1" - (Enabled)
 
-LogColors = ""
+LogColors = "14 7 11 1"
 
 #
 #    EnableLogDB
@@ -692,10 +689,10 @@ LogDB.Chat = 0
 
 #    ChatLogFile
 #        Description: Log file for chat logs.
-#        Default:     "Chat.log" - (Enabled)
-#                     ""         - (Disabled)
+#        Default:     ""         - (Disabled)
+#                     "Chat.log" - (Enabled)
 
-ChatLogFile = "Chat.log"
+ChatLogFile = ""
 
 #    ChatLogTimestamp
 #        Description: Append timestamp to the chat log file name.
@@ -836,15 +833,15 @@ RealmZone = 1
 #    StrictPlayerNames
 #        Description: Limit player name to language specific symbol set. Prevents character
 #                     creation and forces rename request if not allowed symbols are used
-#        Default:     0 - (Disable, Limited server timezone dependent client check)
-#                     1 - (Enabled, Strictly basic Latin characters)
+#        Default:     1 - (Enabled, Strictly basic Latin characters)
+#                     0 - (Disable, Limited server timezone dependent client check)
 #                     2 - (Enabled, Strictly realm zone specific, See RealmZone setting,
 #                         Note: Client needs to have the appropriate fonts installed which support
 #                         the charset. For non-official localization, custom fonts need to be
 #                         placed in clientdir/Fonts.
 #                     3 - (Enabled, Basic Latin characters + server timezone specific)
 
-StrictPlayerNames = 0
+StrictPlayerNames = 1
 
 #
 #    StrictCharterNames
@@ -1359,9 +1356,9 @@ BeepAtStart = 1
 #        Description: Message of the Day, displayed at login.
 #                     Use '@' for a newline and be sure to escape special characters.
 #        Example:     "Welcome to John\'s Server@This server runs on Trinity Core."
-#        Default:     "Welcome to a Trinity Core server."
+#        Default:     "Welcome to a realm!"
 
-Motd = "Welcome to a Trinity Core server."
+Motd = "Welcome to a realm!"
 
 #
 #    Server.LoginInfo
@@ -1374,9 +1371,10 @@ Server.LoginInfo = 0
 #
 #    Command.LookupMaxResults
 #        Description: Number of results being displayed using a .lookup command.
-#        Default:     0 - (Unlimited)
+#        Default:     50 - (Limited)
+#                     0  - (Unlimited)
 
-Command.LookupMaxResults = 0
+Command.LookupMaxResults = 50
 
 #
 #    AllowTickets
@@ -1398,10 +1396,10 @@ DungeonFinder.Enable = 0
 #   DBC.EnforceItemAttributes
 #        Description: Disallow overriding item attributes stored in DBC files with values from the
 #                     database.
-#        Default:     1 - (Enabled, Enforce DBC values)
-#                     0 - (Disabled, Use database values)
+#        Default:     0 - (Disabled, Use database values)
+#                     1 - (Enabled, Enforce DBC values)
 
-DBC.EnforceItemAttributes = 1
+DBC.EnforceItemAttributes = 0
 
 #
 #   AccountInstancesPerHour
@@ -1684,32 +1682,32 @@ ListenRange.Yell = 300
 #        Description: Chat protection from creating fake messages using a lot spaces or other
 #                     invisible symbols. Not applied to the addon language, but may break old
 #                     addons that use normal languages for sending data to other clients.
-#        Default:     0 - (Disabled)
-#                     1 - (Enabled)
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
 
-ChatFakeMessagePreventing = 0
+ChatFakeMessagePreventing = 1
 
 #
 #    ChatStrictLinkChecking.Severity
 #        Description: Check chat messages for ingame links to spells, items, quests, etc.
-#        Default:     0 - (Disabled)
+#        Default:     3 - (Check if color, entry and name don't contradict each other. For this to
+#                         work correctly, please assure that you have extracted locale DBCs of
+#                         every language specific client playing on this server)
+#                     0 - (Disabled)
 #                     1 - (Enabled, Check if only valid pipe commands are used, Prevents posting
 #                         pictures.)
 #                     2 - (Enabled, Verify that pipe commands are used in a correct order)
-#                     3 - (Check if color, entry and name don't contradict each other. For this to
-#                         work correctly, please assure that you have extracted locale DBCs of
-#                         every language specific client playing on this server)
 
-ChatStrictLinkChecking.Severity = 0
+ChatStrictLinkChecking.Severity = 3
 
 #
 #    ChatStrictLinkChecking.Kick
 #        Description: Defines what should be done if a message is considered to contain invalid
 #                     pipe commands.
-#        Default:     0 - (Silently ignore message)
-#                     1 - (Disconnect players who sent malformed messages)
+#        Default:     1 - (Disconnect players who sent malformed messages)
+#                     0 - (Silently ignore message)
 
-ChatStrictLinkChecking.Kick = 0
+ChatStrictLinkChecking.Kick = 1
 
 #
 #    ChatFlood.MessageCount
@@ -1722,16 +1720,16 @@ ChatFlood.MessageCount = 10
 #
 #    ChatFlood.MessageDelay
 #        Description: Time (in seconds) between messages to be counted into ChatFlood.MessageCount.
-#        Default:     1
+#        Default:     2
 
-ChatFlood.MessageDelay = 1
+ChatFlood.MessageDelay = 2
 
 #
 #    ChatFlood.MuteTime
 #        Description: Time (in seconds) characters get muted for violating ChatFlood.MessageCount.
-#        Default:     10
+#        Default:     20
 
-ChatFlood.MuteTime = 10
+ChatFlood.MuteTime = 20
 
 #
 #    Channel.RestrictedLfg
@@ -1773,10 +1771,10 @@ ChatLevelReq.Say = 1
 #
 #    AllowPlayerCommands
 #        Description: Allow players to use commands.
-#        Default:     1 - (Enabled)
-#                     0 - (Disabled)
+#        Default:     0 - (Disabled)
+#                     1 - (Enabled)
 
-AllowPlayerCommands = 1
+AllowPlayerCommands = 0
 
 #
 #    PreserveCustomChannels
@@ -1853,12 +1851,12 @@ GM.InGMList.Level = 3
 #
 #    GM.InWhoList.Level
 #        Description: Max GM level showed in who list (if visible).
-#        Default:     3 - (Anyone)
-#                     0 - (Only players)
+#        Default:     0 - (Only players)
 #                     1 - (Only moderators)
 #                     2 - (Only gamemasters)
+#                     3 - (Anyone)
 
-GM.InWhoList.Level = 3
+GM.InWhoList.Level = 0
 
 #
 #    GM.LogTrade
@@ -1903,12 +1901,12 @@ GM.LowerSecurity = 0
 #
 #    GM.AllowAchievementGain.Level
 #        Description: Max GM level that can obtain achievements.
-#        Default:     3 - (Anyone)
-#                     0 - (Only players)
+#        Default:     0 - (Only players)
 #                     1 - (Only moderators)
 #                     2 - (Only gamemasters)
+#                     3 - (Anyone)
 
-GM.AllowAchievementGain.Level = 3
+GM.AllowAchievementGain.Level = 0
 
 #
 #    GM.TicketSystem.ChanceOfGMSurvey
@@ -2604,11 +2602,11 @@ SOAP.Port = 7878
 #
 #    CharDelete.Method
 #        Description: Character deletion behavior.
-#        Default:     0 - (Completely remove character from the database)
-#                     1 - (Unlink the character from account and free up the name, Appears as
+#        Default:     1 - (Unlink the character from account and free up the name, Appears as
 #                         deleted ingame)
+#                     0 - (Completely remove character from the database)
 
-CharDelete.Method = 0
+CharDelete.Method = 1
 
 #
 #    CharDelete.MinLevel
@@ -2621,10 +2619,10 @@ CharDelete.MinLevel = 0
 #
 #    CharDelete.KeepDays
 #        Description: Time (in days) before unlinked characters will be removed from the database.
-#        Default:     30 - (Enabled)
+#        Default:     14 - (Enabled)
 #                     0  - (Disabled, Don't delete any characters)
 
-CharDelete.KeepDays = 30
+CharDelete.KeepDays = 14
 
 #
 ###################################################################################################
