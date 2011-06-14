@@ -94,7 +94,7 @@ enum FreyaSpells
     SPELL_FLUX_PLUS                              = 62251,
     SPELL_FLUX_MINUS                             = 62252,
     SPELL_SOLAR_FLARE                            = 62240,
-    SPELL_UNSTABLE_SUNBEAM                       = 62207, // Trigger 62211
+    SPELL_UNSTABLE_SUN_BEAM_SUMMON               = 62207, // Trigger 62221
 
     // Stack Removing of Attuned to Nature
     SPELL_REMOVE_25STACK                         = 62521,
@@ -147,6 +147,7 @@ enum FreyaSpells
     SPELL_SUMMON_NATURE_BOMB                     = 64606,
 
     // Unstable Sun Beam
+    SPELL_UNSTABLE_SUN_BEAM                      = 62211,
     SPELL_UNSTABLE_ENERGY                        = 62217,
     SPELL_PHOTOSYNTHESIS                         = 62209,
     SPELL_UNSTABLE_SUN_BEAM_TRIGGERED            = 62243,
@@ -339,7 +340,7 @@ class boss_freya : public CreatureScript
                     Creature* Elder[3];
                     for (uint8 n = 0; n < 3; ++n)
                     {
-                        Elder[n] = ObjectAccessor::GetCreature(*me, instance ? instance->GetData64(BOSS_BRIGHTLEAF + n) : 0);
+                        Elder[n] = ObjectAccessor::GetCreature(*me, instance->GetData64(BOSS_BRIGHTLEAF + n));
                         if (Elder[n] && Elder[n]->isAlive())
                         {
                             Elder[n]->setFaction(35);
@@ -359,7 +360,7 @@ class boss_freya : public CreatureScript
                 Creature* Elder[3];
                 for (uint8 n = 0; n < 3; ++n)
                 {
-                    Elder[n] = ObjectAccessor::GetCreature(*me, instance ? instance->GetData64(BOSS_BRIGHTLEAF + n) : 0);
+                    Elder[n] = ObjectAccessor::GetCreature(*me, instance->GetData64(BOSS_BRIGHTLEAF + n));
                     if (Elder[n] && Elder[n]->isAlive())
                     {
                         me->AddAura(SPELL_DRAINED_OF_POWER, Elder[n]);
@@ -663,7 +664,7 @@ class boss_freya : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_freyaAI(creature);
+            return GetUlduarAI<boss_freyaAI>(creature);
         }
 };
 
@@ -738,8 +739,8 @@ class boss_elder_brightleaf : public CreatureScript
                         case EVENT_UNSTABLE_SUN_BEAM:
                             Position pos;
                             me->GetRandomNearPosition(pos, 20.0f);
-                            me->SummonCreature(NPC_UNSTABLE_SUN_BEAM, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), 0);
-                            events.ScheduleEvent(EVENT_UNSTABLE_SUN_BEAM, urand(7000, 15000));
+                            me->CastSpell(me, SPELL_UNSTABLE_SUN_BEAM_SUMMON, true);
+                            events.ScheduleEvent(EVENT_UNSTABLE_SUN_BEAM, urand(10000, 15000));
                             break;
                         case EVENT_SOLAR_FLARE:
                         {
@@ -755,7 +756,7 @@ class boss_elder_brightleaf : public CreatureScript
                             me->AddAura(SPELL_FLUX_AURA, me);
                             if (Aura* Flux = me->GetAura(SPELL_FLUX_AURA))
                                 Flux->SetStackAmount(urand(1, 8));
-                            events.ScheduleEvent(EVENT_FLUX, 5000);
+                            events.ScheduleEvent(EVENT_FLUX, 7500);
                             break;
                     }
                 }
@@ -780,7 +781,7 @@ class boss_elder_brightleaf : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_elder_brightleafAI(creature);
+            return GetUlduarAI<boss_elder_brightleafAI>(creature);
         }
 };
 
@@ -901,7 +902,7 @@ class boss_elder_stonebark : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_elder_stonebarkAI(creature);
+            return GetUlduarAI<boss_elder_stonebarkAI>(creature);
         }
 };
 
@@ -1009,7 +1010,7 @@ class boss_elder_ironbranch : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_elder_ironbranchAI(creature);
+            return GetUlduarAI<boss_elder_ironbranchAI>(creature);
         }
 };
 
@@ -1459,10 +1460,10 @@ class npc_unstable_sun_beam : public CreatureScript
         {
             npc_unstable_sun_beamAI(Creature* creature) : Scripted_NoMovementAI(creature)
             {
-                despawnTimer = 10000;
+                despawnTimer = urand(7000, 12000);
                 instance = me->GetInstanceScript();
                 DoCast(me, SPELL_PHOTOSYNTHESIS);
-                DoCast(me, SPELL_UNSTABLE_SUNBEAM);
+                DoCast(me, SPELL_UNSTABLE_SUN_BEAM);
                 me->SetReactState(REACT_PASSIVE);
             }
 
@@ -1485,7 +1486,7 @@ class npc_unstable_sun_beam : public CreatureScript
             {
                 if (target && spell->Id == SPELL_UNSTABLE_ENERGY)
                 {
-                    target->RemoveAurasDueToSpell(SPELL_UNSTABLE_SUNBEAM);
+                    target->RemoveAurasDueToSpell(SPELL_UNSTABLE_SUN_BEAM);
                     target->RemoveAurasDueToSpell(SPELL_UNSTABLE_SUN_BEAM_TRIGGERED);
                 }
             }

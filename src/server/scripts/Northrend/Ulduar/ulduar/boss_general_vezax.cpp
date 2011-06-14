@@ -300,7 +300,7 @@ class boss_general_vezax : public CreatureScript
 
         CreatureAI* GetAI(Creature* creature) const
         {
-            return new boss_general_vezaxAI(creature);
+            return GetUlduarAI<boss_general_vezaxAI>(creature);
         }
 };
 
@@ -448,7 +448,8 @@ class spell_mark_of_the_faceless : public SpellScriptLoader
 
             void HandleEffectPeriodic(AuraEffect const* aurEff)
             {
-                GetCaster()->CastCustomSpell(SPELL_MARK_OF_THE_FACELESS_DAMAGE, SPELLVALUE_BASE_POINT1, aurEff->GetAmount(), GetTarget(), true);
+                if (Unit* caster = GetCaster())
+                    caster->CastCustomSpell(SPELL_MARK_OF_THE_FACELESS_DAMAGE, SPELLVALUE_BASE_POINT1, aurEff->GetAmount(), GetTarget(), true);
             }
 
             void Register()
